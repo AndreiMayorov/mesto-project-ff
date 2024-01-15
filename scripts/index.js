@@ -17,7 +17,7 @@ initialCards.forEach(function (item) {
   cardsContainer.append(card);
 });
 
-function createCard(element, removal) {
+function createCard(element, onDelete) {
 
   const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
   const cardDeleteButton = cardElement.querySelector('.card__delete-button');
@@ -28,7 +28,7 @@ function createCard(element, removal) {
   cardElement.querySelector('.card__title').textContent = element.name;
 
   cardDeleteButton.addEventListener('click', function() {
-    removal(cardElement);
+    onDelete(cardElement);
   });
 
   return cardElement;
