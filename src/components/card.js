@@ -1,16 +1,16 @@
 const cardsContainer = document.querySelector('.places__list');
 const cardTemplate = document.querySelector('#card-template').content;
 
-function createCard(element, onDelete, onLike, onShow) {
+function createCard(card, onDelete, onLike, onShow) {
 
   const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
   const cardDeleteButton = cardElement.querySelector('.card__delete-button');
   const cardImage = cardElement.querySelector('.card__image');
   const cardName = cardElement.querySelector('.card__title');
   
-  cardImage.src = element.link;
-  cardImage.alt = "Фотография места. " + element.name;
-  cardName.textContent = element.name;
+  cardImage.src = card.link;
+  cardImage.alt = "Фотография места. " + card.name;
+  cardName.textContent = card.name;
 
   cardDeleteButton.addEventListener('click', function() {
     onDelete(cardElement);

@@ -1,22 +1,28 @@
-import '../pages/index.css';
+import './pages/index.css';
 import {cardsContainer, createCard, deleteCard, likeCard} from './components/card.js';
 import {initialCards} from './components/cards.js';
 import {addClassPopup, removeClassPopup, closePopupOverlayAndButton, closePopupEscape} from './components/modal.js';
 
-const buttonOpenPopupEdit = document.querySelector('.profile__edit-button');
+const buttonOpenPopupProfile = document.querySelector('.profile__edit-button');
 const buttonOpenPopupCard = document.querySelector('.profile__add-button');
 
-const popupEdit = document.querySelector('.popup_type_edit');
+const nameProfile = document.querySelector('.profile__title');
+const jobProfile = document.querySelector('.profile__description');
+
+const popupProfile = document.querySelector('.popup_type_edit');
 const popupCard = document.querySelector('.popup_type_new-card');
 const popupPhoto = document.querySelector('.popup_type_image');
 
-const formElementEdit = popupEdit.querySelector('.popup__form');
-const nameInputEdit = formElementEdit.querySelector('.popup__input_type_name');
-const jobInputEdit = formElementEdit.querySelector('.popup__input_type_description');
+const formProfile = popupProfile.querySelector('.popup__form');
+const nameFormProfile = formProfile.querySelector('.popup__input_type_name');
+const jobFormProfile = formProfile.querySelector('.popup__input_type_description');
 
-const formElementCard = popupCard.querySelector('.popup__form');
-const nameInputCard = formElementCard.querySelector('.popup__input_type_card-name');
-const linkInputCard = formElementCard.querySelector('.popup__input_type_url');
+const formCard = popupCard.querySelector('.popup__form');
+const nameFormCard = formCard.querySelector('.popup__input_type_card-name');
+const linkFormCard = formCard.querySelector('.popup__input_type_url');
+
+const popupImage = popupPhoto.querySelector('.popup__image');
+const popupName = popupPhoto.querySelector('.popup__caption');
 
 initialCards.forEach(function (item) {
   const card = createCard(item, deleteCard, likeCard, showCard);
@@ -24,50 +30,44 @@ initialCards.forEach(function (item) {
 });
 
 function showCard(link, name) {
-  const popupImage = popupPhoto.querySelector('.popup__image');
-  const popupName = popupPhoto.querySelector('.popup__caption');
   popupImage.src = link;
   popupImage.alt = "Фотография места. " + name;
   popupName.textContent = name;
   addClassPopup(popupPhoto);
 };
 
-buttonOpenPopupEdit.addEventListener('click', function () {
-  nameInputEdit.value = document.querySelector('.profile__title').textContent;
-  jobInputEdit.value = document.querySelector('.profile__description').textContent;
-  addClassPopup(popupEdit);
+buttonOpenPopupProfile.addEventListener('click', function () {
+  nameFormProfile.value = nameProfile.textContent;
+  jobFormProfile.value = jobProfile.textContent;
+  addClassPopup(popupProfile);
 });
 
 buttonOpenPopupCard.addEventListener('click', function () {
-  nameInputCard.value = '';
-  linkInputCard.value = '';
   addClassPopup(popupCard);
 });
 
-popupEdit.addEventListener('click', closePopupOverlayAndButton);
+popupProfile.addEventListener('click', closePopupOverlayAndButton);
 popupCard.addEventListener('click', closePopupOverlayAndButton);
 popupPhoto.addEventListener('click', closePopupOverlayAndButton);
 
-document.addEventListener('keydown', closePopupEscape);
-
 function handleFormSubmitEdit(evt) {
   evt.preventDefault();
-  document.querySelector('.profile__title').textContent = nameInputEdit.value;
-  document.querySelector('.profile__description').textContent = jobInputEdit.value;
-  removeClassPopup(popupEdit);
+  nameProfile.textContent = nameFormProfile.value;
+  jobProfile.textContent = jobFormProfile.value;
+  removeClassPopup(popupProfile);
 };
 
-formElementEdit.addEventListener('submit', handleFormSubmitEdit);
+formProfile.addEventListener('submit', handleFormSubmitEdit);
 
 function handleFormSubmitCard(evt) {
   evt.preventDefault();
-  const cardData = {};
-  cardData.name = nameInputCard.value;
-  cardData.link = linkInputCard.value;
-  const card = createCard(cardData, deleteCard, likeCard, showCard);
+  const newCard = {};
+  newCard.name = nameFormCard.value;
+  newCard.link = linkFormCard.value;
+  const card = createCard(newCard, deleteCard, likeCard, showCard);
   cardsContainer.prepend(card);
-  formElementCard.reset();
+  formCard.reset();
   removeClassPopup(popupCard);
 };
 
-formElementCard.addEventListener('submit', handleFormSubmitCard);
+formCard.addEventListener('submit', handleFormSubmitCard);
