@@ -46,9 +46,9 @@ buttonOpenPopupCard.addEventListener('click', function () {
   openPopup(popupCard);
 });
 
-popupProfile.addEventListener('click', closePopupOverlayAndButton);
-popupCard.addEventListener('click', closePopupOverlayAndButton);
-popupPhoto.addEventListener('click', closePopupOverlayAndButton);
+[popupProfile, popupCard, popupPhoto].forEach((popup) => {
+  popup.addEventListener('click', closePopupOverlayAndButton);
+})
 
 function handleFormSubmitEdit(evt) {
   evt.preventDefault();
