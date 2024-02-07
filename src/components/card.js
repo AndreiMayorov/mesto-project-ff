@@ -16,7 +16,7 @@ function createCard(card, onDelete, onLike, onShow) {
     onDelete(cardElement);
   });
 
-  cardsContainer.addEventListener('click', onLike);
+  cardElement.querySelector('.card__like-button').addEventListener('click', onLike);
 
   cardImage.addEventListener('click', function() {
     onShow(cardImage.src, cardName.textContent)
@@ -30,9 +30,7 @@ function deleteCard(card) {
 };
 
 function likeCard(evt) {
-  if (evt.target.classList.contains('card__like-button')) {
-    evt.target.classList.toggle('card__like-button_is-active');
-  }
+  evt.target.classList.toggle('card__like-button_is-active');
 };
 
 export {cardsContainer, createCard, deleteCard, likeCard};

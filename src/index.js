@@ -1,7 +1,7 @@
 import './pages/index.css';
 import {cardsContainer, createCard, deleteCard, likeCard} from './components/card.js';
 import {initialCards} from './components/cards.js';
-import {addClassPopup, removeClassPopup, closePopupOverlayAndButton, closePopupEscape} from './components/modal.js';
+import {openPopup, closePopup, closePopupOverlayAndButton} from './components/modal.js';
 
 const buttonOpenPopupProfile = document.querySelector('.profile__edit-button');
 const buttonOpenPopupCard = document.querySelector('.profile__add-button');
@@ -33,17 +33,17 @@ function showCard(link, name) {
   popupImage.src = link;
   popupImage.alt = "Фотография места. " + name;
   popupName.textContent = name;
-  addClassPopup(popupPhoto);
+  openPopup(popupPhoto);
 };
 
 buttonOpenPopupProfile.addEventListener('click', function () {
   nameFormProfile.value = nameProfile.textContent;
   jobFormProfile.value = jobProfile.textContent;
-  addClassPopup(popupProfile);
+  openPopup(popupProfile);
 });
 
 buttonOpenPopupCard.addEventListener('click', function () {
-  addClassPopup(popupCard);
+  openPopup(popupCard);
 });
 
 popupProfile.addEventListener('click', closePopupOverlayAndButton);
@@ -54,7 +54,7 @@ function handleFormSubmitEdit(evt) {
   evt.preventDefault();
   nameProfile.textContent = nameFormProfile.value;
   jobProfile.textContent = jobFormProfile.value;
-  removeClassPopup(popupProfile);
+  closePopup(popupProfile);
 };
 
 formProfile.addEventListener('submit', handleFormSubmitEdit);
@@ -67,7 +67,7 @@ function handleFormSubmitCard(evt) {
   const card = createCard(newCard, deleteCard, likeCard, showCard);
   cardsContainer.prepend(card);
   formCard.reset();
-  removeClassPopup(popupCard);
+  closePopup(popupCard);
 };
 
 formCard.addEventListener('submit', handleFormSubmitCard);
